@@ -16,6 +16,8 @@ export const Foldercard = ({
   setPath,
   value,
   fun,
+  setPrevPath,
+  handleBackNavigation
 }) => {
   // const nav = useNavigate();
   // const navigatePath = (type) => {
@@ -88,68 +90,79 @@ export const Foldercard = ({
 
   return (
     <>
+      <button
+        onClick={() => {
+          handleBackNavigation()
+        }}
+      >
+        click
+      </button>
       {folders?.map((data, i) => {
         // console.log("/////////", data, "----", i);
-
         return (
-          <Col
-            className="position-relative"
-            lg={12}
-            onClick={() => {
-              // window.history.pushState(null, "", "folders" + data.path_lower);
-              setUrl_path(data.path_lower);
-              setPath(data.path_lower);
-            }}
-            key={i}
-          >
-            {/* {console.log(path)} */}
-            {data[".tag"] === "folder" ? (
-              <Col className="folder-box p-3" key={data.id}>
-                <FcOpenedFolder style={{ fontSize: "1.7rem" }} />
-                &nbsp;
-                <span>{data.name}</span>
-              </Col>
-            ) : (
-              <Col className="folder-box p-3" key={data.id}>
-                {/* {(con = 1)} */}
-                <AiFillFilePdf style={{ fontSize: "1.7rem", color: "red" }} />
-                &nbsp;
-                {/* {console.log(dummy)} */}
-                <span>{data.name}</span>
-                <br></br>
-                <span style={{ fontSize: "0.7rem", color: "red" }}>
-                  {data.path_lower}
-                </span>
-                {/* {console.log("con", con)} */}
-                {value == 1 ? (
-                  <div>
-                    <span>{data.name}</span>
-                    <br></br>
-                    <span style={{ fontSize: "0.7rem", color: "red" }}>
-                      {/* {data["metadata"]["path_display"]} */}
-                    </span>
-                  </div>
-                ) : (
-                  ""
-                )}
-                <span style={{ position: "absolute", right: "1%", top: "20%" }}>
-                  <button
-                    className="btn btn-danger"
-                    onClick={() => {
-                      setDownloadPath(data.path_lower);
-                      // DownloadFile(blob);
-                      // call();
-                      // showFile(blob, path);
-                      // PdfDownload(blob, path);
-                      // fileDownload();
-                    }}
+          <>
+            <Col
+              className="position-relative"
+              lg={12}
+              onClick={() => {
+                setPrevPath(data.path_lower)
+                // window.history.pushState(null, "", "folders" + data.path_lower);
+                setUrl_path(data.path_lower);
+                setPath(data.path_lower);
+              }}
+              key={i}
+            >
+              {/* {console.log(path)} */}
+              {data[".tag"] === "folder" ? (
+                <Col className="folder-box p-3" key={data.id}>
+                  <FcOpenedFolder style={{ fontSize: "1.7rem" }} />
+                  &nbsp;
+                  <span>{data.name}</span>
+                </Col>
+              ) : (
+                <Col className="folder-box p-3" key={data.id}>
+                  {/* {(con = 1)} */}
+                  <AiFillFilePdf style={{ fontSize: "1.7rem", color: "red" }} />
+                  &nbsp;
+                  {/* {console.log(dummy)} */}
+                  <span>{data.name}</span>
+                  <br></br>
+                  <span style={{ fontSize: "0.7rem", color: "red" }}>
+                    {data.path_lower}
+                  </span>
+                  {/* {console.log("con", con)} */}
+                  {value == 1 ? (
+                    <div>
+                      <span>{data.name}</span>
+                      <br></br>
+                      <span style={{ fontSize: "0.7rem", color: "red" }}>
+                        {/* {data["metadata"]["path_display"]} */}
+                      </span>
+                    </div>
+                  ) : (
+                    ""
+                  )}
+                  <span
+                    style={{ position: "absolute", right: "1%", top: "20%" }}
                   >
-                    download
-                  </button>
-                </span>
-              </Col>
-            )}
-          </Col>
+                    <button
+                      className="btn btn-danger"
+                      onClick={() => {
+                        setDownloadPath(data.path_lower);
+                        // DownloadFile(blob);
+                        // call();
+                        // showFile(blob, path);
+                        // PdfDownload(blob, path);
+                        // fileDownload();
+                      }}
+                    >
+                      download
+                    </button>
+                  </span>
+                </Col>
+              )}
+            </Col>
+          </>
         );
       })}
     </>

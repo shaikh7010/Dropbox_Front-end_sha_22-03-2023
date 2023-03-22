@@ -18,6 +18,7 @@ function Folders() {
   const [dropboxData, setDropboxData] = useState([]);
 
   const [path, setPath] = useState("");
+  const [prevPath, setPrevPath] = useState("");
   const [isShow, setIsShow] = useState(false);
   const [searchData, setSearchData] = useState();
   const [allFolder, setAllFolder] = useState(false);
@@ -55,7 +56,7 @@ function Folders() {
     const query = { searchName: user };
     const res = await axios.post(url, { searchName: user });
     if (res.status === 200) {
-      console.log("::::::::", res.data);
+      // console.log("::::::::", res.data);
       setSearchData(res.data);
       // var a = search(res.data, 1);
       // console.log("$$$$$$$$$", a);
@@ -108,6 +109,15 @@ function Folders() {
     req_path_api(path);
   }, [path, window.location.pathname]);
 
+  const handleBackNavigation = () => {
+    const result = prevPath.slice(0, prevPath.lastIndexOf('/'));
+    setPrevPath(result);
+    console.log(result);
+    req_path_api(result);
+  };
+  useEffect(()=>{
+    
+  },[dropboxData])
   // console.log("---", path);
   return (
     <>
@@ -116,7 +126,7 @@ function Folders() {
           <Row>
             <div className="row">
               <div className="col-6">
-                <button className="bg-secondary" onClick={() => navigate(-1)}>
+                <button className="bg-secondary" onClick={handleBackNavigation}>
                   back
                 </button>
                 <button className="bg-secondary" onClick={() => navigate(1)}>
@@ -167,6 +177,8 @@ function Folders() {
                 setPath={setPath}
                 value={count.current}
                 fun={req_path_api}
+                setPrevPath={setPrevPath}
+                handleBackNavigation={handleBackNavigation}
               />
             ) : (
               <FolderOnly
@@ -175,6 +187,8 @@ function Folders() {
                 path={path}
                 setPath={setPath}
                 value={isShow}
+                setPrevPath={setPrevPath}
+                handleBackNavigation={handleBackNavigation}
               />
             )}
 
