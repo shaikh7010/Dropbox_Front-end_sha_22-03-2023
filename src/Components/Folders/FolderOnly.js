@@ -11,6 +11,8 @@ export const FolderOnly = ({
   setPath,
   value,
   fun,
+  setPrevPath,
+  handleBackNavigation,
 }) => {
   const [downloadPath, setDownloadPath] = useState("");
   const [blob, setBlob] = useState({ imgUrl: "" });
